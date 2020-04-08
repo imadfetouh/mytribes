@@ -1,6 +1,8 @@
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+var ip = require("ip");
+console.log ( ip.address() );
 
 var users = [];
 
