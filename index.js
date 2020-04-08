@@ -4,6 +4,10 @@ var io = require('socket.io')(http);
 
 var users = [];
 
+app.get("/", (req, res, next) => {
+    res.json(["Tony","Lisa","Michael","Ginger","Food"]);
+});
+
 io.on('connection', function(socket){
     console.log('user connected');
     socket.emit("all users", JSON.stringify(users));
