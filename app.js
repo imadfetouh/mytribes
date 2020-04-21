@@ -5,29 +5,39 @@ var io = require('socket.io')(http);
 var ip = require("ip");
 console.log ( ip.address() );
 
-var users = [];
+var User = require('./user.js');
+var UserData = require('./userdata.js')
+var UserStorage = require('./userstorage.js');
+
+var userStorage = new UserStorage();
+
+//var users = [];
 
 app.get("/", (req, res, next) => {
-    res.json(["Tony","Lisa","Michael","Ginger","Food"]);
+    res.json(["Tony","Lisa","Michael","Ginger","Foodff"]);
+    //res.json(users);
 });
 
 io.on('connection', function(socket){
     console.log('user connected');
-    socket.emit("all users", JSON.stringify(users));
+    // socket.emit("all users", JSON.stringify(users));
+    socket.emit("all users", JSON.stringify(getUsers()));
 
     socket.on('newLocation', function(msg){
         var json = JSON.parse(msg);
         console.log(json)
 
-        var user = users.find(o => o.id === json.id);
+        var user = userStorage.getUser(json.id);
         if(user != null){
-            user.lat = json.lat;
-            user.lon = json.lon;
+            user.changeLocation(json.lat, json.lon);
         }
         else{
-            var newUser = { id: json.id, lat: json.lat, lon: json.lon, userData: { nationality: "Morocco" } }
-            users.push(newUser)
+            var newUser = new User(json.id, json.lat, json.lon, new UserData(json.username, json.nationality));
+            userStorage.addUser(newUser);
+            //var newUser = { id: json.id, lat: json.lat, lon: json.lon, userData: { username: "imad", nationality: "Morocco" } }
+            //users.push(newUser)
         }
+        console.log("user: " + JSON.stringify(userStorage.getUsers()));
         socket.broadcast.emit('location changed', json);
     });
 });
