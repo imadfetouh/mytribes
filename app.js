@@ -11,11 +11,8 @@ var UserStorage = require('./userstorage.js');
 
 var userStorage = new UserStorage();
 
-//var users = [];
-
 app.get("/", (req, res, next) => {
     res.json(["Tony","Lisa","Michael","Ginger","Foodff"]);
-    //res.json(users);
 });
 
 io.on('connection', function(socket){
@@ -32,7 +29,7 @@ io.on('connection', function(socket){
             user.changeLocation(json.lat, json.lon);
         }
         else{
-            var newUser = new User(json.id, json.lat, json.lon, new UserData(json.username, json.nationality));
+            var newUser = new User(json.id, json.lat, json.lon, new UserData("imad", "morocco"));
             userStorage.addUser(newUser);
             //var newUser = { id: json.id, lat: json.lat, lon: json.lon, userData: { username: "imad", nationality: "Morocco" } }
             //users.push(newUser)
