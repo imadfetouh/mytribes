@@ -21,7 +21,7 @@ app.get("/", (req, res, next) => {
 io.on('connection', function(socket){
     console.log('user connected');
     // socket.emit("all users", JSON.stringify(users));
-    socket.emit("all users", JSON.stringify(getUsers()));
+    socket.emit("all users", JSON.stringify(userStorage.getUsers()));
 
     socket.on('newLocation', function(msg){
         var json = JSON.parse(msg);
