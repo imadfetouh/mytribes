@@ -17,7 +17,6 @@ app.get("/", (req, res, next) => {
 
 io.on('connection', function(socket){
     console.log('user connected');
-    // socket.emit("all users", JSON.stringify(users));
     socket.emit("all users", JSON.stringify(userStorage.getUsers()));
 
     socket.on('newLocation', function(msg){
@@ -29,10 +28,8 @@ io.on('connection', function(socket){
             user.changeLocation(json.lat, json.lon);
         }
         else{
-            var newUser = new User(json.id, json.lat, json.lon, new UserData("imad", "morocco"));
+            var newUser = new User(json.id, json.lat, json.lon, new UserData("imad", "Morocco"));
             userStorage.addUser(newUser);
-            //var newUser = { id: json.id, lat: json.lat, lon: json.lon, userData: { username: "imad", nationality: "Morocco" } }
-            //users.push(newUser)
         }
         console.log("user: " + JSON.stringify(userStorage.getUsers()));
         socket.broadcast.emit('location changed', json);

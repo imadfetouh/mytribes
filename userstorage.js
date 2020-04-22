@@ -1,15 +1,3 @@
-var UserData = require('./userdata.js')
-var User = require('./user.js');
-
-var users = [];
-
-var user = new User(1, 20, 21, new UserData("imad", "morocco"));
-
-users.push(user);
-
-
-//module.exports = users;
-
 module.exports = function () {
     this.users = [];
 
