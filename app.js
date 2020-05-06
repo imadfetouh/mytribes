@@ -37,8 +37,8 @@ io.on('connection', function(socket){
         var json = JSON.parse(msg);
         console.log(json);
 
-        // var user = userStorage.getUser(json.id);
-        //user.userdata.visibility != user.userdata.visibility;
+        var user = userStorage.getUser(json.id);
+        user.userdata.visibility = json.visibility;
 
         socket.broadcast.emit('visibilityChanged', json);
     })
