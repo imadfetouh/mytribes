@@ -2,8 +2,6 @@ var PORT = process.env.PORT || 3000;
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-var ip = require("ip");
-console.log ( ip.address() );
 
 var User = require('./user.js');
 var UserData = require('./userdata.js')
@@ -34,6 +32,16 @@ io.on('connection', function(socket){
         console.log("user: " + JSON.stringify(userStorage.getUsers()));
         socket.broadcast.emit('location changed', json);
     });
+
+    socket.on('changeVisibility', function(msg){
+        var json = JSON.parse(msg);
+        console.log(json);
+
+        // var user = userStorage.getUser(json.id);
+        //user.userdata.visibility != user.userdata.visibility;
+
+        socket.broadcast.emit('visibilityChanged', json);
+    })
 });
 
 http.listen(PORT, function(){
