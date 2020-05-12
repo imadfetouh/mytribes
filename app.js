@@ -26,7 +26,7 @@ io.on('connection', function(socket){
             user.changeLocation(json.lat, json.lon);
         }
         else{
-            var newUser = new User(json.id, json.lat, json.lon, new UserData("imad", "Morocco"));
+            var newUser = new User(json.id, json.lat, json.lon, new UserData("imad", "Morocco", true));
             userStorage.addUser(newUser);
         }
         console.log("user: " + JSON.stringify(userStorage.getUsers()));
