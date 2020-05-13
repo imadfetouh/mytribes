@@ -42,10 +42,6 @@ io.on('connection', function(socket){
 
         socket.broadcast.emit('visibilityChanged', json);
     });
-
-    socket.on('disconnect', function(msg){
-        console.log("USER DISCONNECTED: " + JSON.parse(msg));
-    });
 });
 
 http.listen(PORT, function(){
